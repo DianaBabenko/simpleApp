@@ -15,12 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    $tasks = [
-        'add t',
-        'find t',
-        'review t'
-    ];
-    return view('hello', compact('tasks'));
-
+Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
+    Route::resource('posts', 'PostController')->names('blog.posts');
 });
+
+Route::resource('rest', 'RestTestController')->names('restTest');
+
