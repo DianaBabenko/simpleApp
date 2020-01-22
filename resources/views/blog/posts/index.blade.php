@@ -5,6 +5,9 @@
     <title>Document</title>
 </head>
 <body>
+@extends('layouts.app')
+
+@section('content')
 <table>
     @foreach ($items as $item)
         <tr>
@@ -14,5 +17,6 @@
         </tr>
     @endforeach
 </table>
+@endsection
 </body>
 </html>
