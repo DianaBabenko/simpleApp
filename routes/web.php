@@ -23,7 +23,6 @@ Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
 
 
 //Admin page
-
 $groupData = [
     'namespace' => 'Blog\Admin',
     'prefix' => 'admin/blog'
