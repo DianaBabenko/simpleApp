@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Blog\Admin;
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\BlogCategoryUpdateRequest;
@@ -22,22 +23,46 @@ class CategoryController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
-        dd(__METHOD__);
+        $item = new BlogCategory();
+        $categoryList = BlogCategory::all();
+
+        return view('blog.admin.categories.edit',
+            compact('item', 'categoryList'));
     }
+
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param BlogCategoryCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request)
     {
-        dd(__METHOD__);
+        $data = $request->input();
+        if (empty($data['slug'])) {
+            $data['slug'] = str_slug($data['title']);
+        }
+
+        //Create object but don't create it in db
+        /*$item = new BlogCategory($data);
+        $item->save();*/
+
+        //Create object and save in db
+        $item = (new BlogCategory())->create($data);
+
+        if($item) {
+            return redirect()
+                ->route('blog.admin.categories.edit', [$item->id])
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**
@@ -55,12 +80,11 @@ class CategoryController extends BaseController
         compact('item', 'categoryList'));
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @param BlogCategoryUpdateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
@@ -85,9 +109,13 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        $result = $item
-            ->fill($data) //fill fields
-            ->save();//return bool (save to db)
+        if (empty($data['slug'])) {
+            $data['slug'] = str_slug($data['title']);
+        }
+
+        $result = $item->update($data); //method update($data) includes fill and save methods
+            /*->fill($data) //fill fields
+            ->save();//return bool (save to db)*/
 
         if ($result) {
             return redirect()
