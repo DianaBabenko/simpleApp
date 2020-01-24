@@ -1,22 +1,40 @@
 <?php
 
 namespace App\Http\Controllers\Blog\Admin;
+
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
-use Illuminate\Http\Request;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
 
+
+/**
+ * Class CategoryController
+ * @package App\Http\Controllers\Blog\Admin
+ */
 class CategoryController extends BaseController
 {
     /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
-        $paginator = BlogCategory::paginate(15);
+        //$paginator = BlogCategory::paginate(15);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
@@ -29,7 +47,7 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -47,10 +65,6 @@ class CategoryController extends BaseController
         if (empty($data['slug'])) {
             $data['slug'] = str_slug($data['title']);
         }
-
-        //Create object but don't create it in db
-        /*$item = new BlogCategory($data);
-        $item->save();*/
 
         //Create object and save in db
         $item = (new BlogCategory())->create($data);
@@ -74,14 +88,12 @@ class CategoryController extends BaseController
      */
     public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        /*$item = BlogCategory::findOrFail($id);
-        $categoryList = BlogCategory::all();*/
-
-        $item = $categoryRepository->getEdit($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if(empty($item)) {
             abort(404);
         }
-        $categoryList = $categoryRepository->getForComboBox();//get elements for combobox list
+        $categoryList
+            = $this->blogCategoryRepository->getForComboBox();//get elements for combobox list
 
         return view('blog.admin.categories.edit',
         compact('item', 'categoryList'));
@@ -95,20 +107,8 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        /*$rules = [
-            'title'         => 'required|min:5|max:200',
-            'slug'          => 'max:200',
-            'description'   => 'string|max:500|min:3',
-            'parent_id'     => 'required|integer|exists:blog_categories,id',
-        ];*/
+        $item = $this->blogCategoryRepository->getEdit($id);
 
-        //$validatedData = $this->validate($request, $rules); // handle to controller ValidatesRequests
-
-        //$validatedData = $request->validate($rules);// if errors -> redirect to back with description of error
-
-        //dd($validatedData);
-
-        $item = BlogCategory::find($id);
         if (empty($item)) {
             return back() //redirect back
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"]) //situated in errors array (back())
