@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
@@ -62,9 +63,9 @@ class CategoryController extends BaseController
     public function store(BlogCategoryCreateRequest $request)
     {
         $data = $request->input();
-        if (empty($data['slug'])) {
-            $data['slug'] = str_slug($data['title']);
-        }
+        /*if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }*/
 
         //Create object and save in db
         $item = (new BlogCategory())->create($data);
@@ -116,9 +117,9 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        if (empty($data['slug'])) {
-            $data['slug'] = str_slug($data['title']);
-        }
+        /*if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }*/
 
         $result = $item->update($data); //method update($data) includes fill and save methods
             /*->fill($data) //fill fields
