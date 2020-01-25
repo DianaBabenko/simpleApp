@@ -11,6 +11,6 @@ class BaseController extends GuestBaseController
      * BaseController constructor.
      */
     public function __construct() {
-
+        //initialization common properties for adminP
     }
 }
