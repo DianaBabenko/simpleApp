@@ -54,7 +54,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        $item = new BlogPost();
+        $item = BlogPost::make();
         $categoryList
             = $this->blogCategoryRepository->getForComboBox();
 
@@ -71,7 +71,7 @@ class PostController extends BaseController
     public function store(BlogPostCreateRequest $request)
     {
         $data = $request->input();
-        $item = (new BlogPost())->create($data);
+        $item = BlogPost::create($data);
 
         if ($item) {
             return redirect()->route('blog.admin.posts.edit', [$item->id])
@@ -155,10 +155,10 @@ class PostController extends BaseController
     public function destroy($id)
     {
         //soft delete, stay at db
-        //$result = BlogPost::destroy($id);
+        $result = BlogPost::destroy($id);
 
         //full delete from db
-        $result = BlogPost::find($id)->forceDelete();
+        //$result = BlogPost::find($id)->forceDelete();
 
         if ($result) {
             return redirect()
