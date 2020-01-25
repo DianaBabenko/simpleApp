@@ -50,4 +50,13 @@ class BlogPostRepository extends CoreRepository
 
         return $result;
     }
+
+    /**
+     * @param $id
+     * @return Model
+     */
+    public function getEdit($id)
+    {
+        return $this->startConditions()->find($id);
+    }
 }
