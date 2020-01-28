@@ -9,6 +9,7 @@ use App\Models\BlogPost;
 use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class PostController
@@ -155,9 +156,9 @@ class PostController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         //soft delete, stay at db
         $result = BlogPost::destroy($id);
@@ -165,16 +166,16 @@ class PostController extends BaseController
         //full delete from db
         //$result = BlogPost::find($id)->forceDelete();
 
-        if ($result) {
+        if ($result === 1) {
 
             BlogPostAfterDeleteJob::dispatch($id)->delay(20);
 
             return redirect()
                 ->route('blog.admin.posts.index')
                 ->with(['success' => "Запись id[$id] удалена"]);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка удаления']);
         }
+
+        return back()
+            ->withErrors(['msg' => 'Ошибка удаления']);
     }
 }

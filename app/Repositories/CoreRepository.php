@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Can't create or change
  */
-abstract class CoreRepository {
+abstract class CoreRepository
+{
     /**
      * @var Model
      */
