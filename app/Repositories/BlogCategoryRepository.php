@@ -32,6 +32,19 @@ class BlogCategoryRepository extends CoreRepository {
         return $this->startConditions()->find($id);
     }
 
+
+    /**
+     * @return Collection
+     */
+    public function getPosts():Collection
+    {
+        $posts =  $this->startConditions()
+            ->with(['posts'])
+            ->get();
+
+        return $posts;
+    }
+
     /**
      * get list of category for combobox list
      * @return Collection

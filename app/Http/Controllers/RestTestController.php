@@ -45,7 +45,9 @@ class RestTestController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = App\Models\Post::find($id)->posts;
+
+        return view('welcome', compact($posts));
     }
 
     /**

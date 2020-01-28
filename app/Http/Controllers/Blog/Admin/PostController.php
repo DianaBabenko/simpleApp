@@ -10,6 +10,7 @@ use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class PostController
@@ -41,11 +42,12 @@ class PostController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $paginator = $this->blogPostRepository->getAllWithPaginate();
+        dd($this->blogPostRepository->getMarkers()->first());
 
         return view('blog.admin.posts.index', compact('paginator'));
     }

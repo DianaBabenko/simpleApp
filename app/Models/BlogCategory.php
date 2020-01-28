@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\BlogPost;
 
 /**
  * Class BlogCategory
@@ -32,13 +34,21 @@ class BlogCategory extends Model
         ];
 
     /**
+     * @return HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(BlogPost::class,'category_id','id');
+    }
+
+    /**
      * get parent's category
      *
      * @return BelongsTo
      */
     public function parentCategory()
     {
-        return $this->belongsTo(BlogCategory::class, 'parent_id', 'id');
+        return $this->belongsTo(static::class, 'parent_id', 'id');
     }
 
     /**

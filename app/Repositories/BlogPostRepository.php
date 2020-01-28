@@ -22,6 +22,17 @@ class BlogPostRepository extends CoreRepository
     }
 
     /**
+     * @return Collection
+     */
+    public function getMarkers():Collection
+    {
+        $markers =  $this->startConditions()
+            ->with(['markers'])
+            ->get();
+        return $markers;
+    }
+
+    /**
      * @return LengthAwarePaginator
      */
     public function getAllWithPaginate()

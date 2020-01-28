@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -38,20 +41,34 @@ class BlogPost extends Model
         ];
 
     /**
-     * Category of post
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(BlogCategory::class);
+        return $this->belongsTo(BlogCategory::class,'category_id','id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function markers(): BelongsToMany
+    {
+        return  $this->belongsToMany(
+            BlogPostMarker::class,
+            'post_marker',
+            'post_id',
+            'marker_id',
+            'id',
+            'id'
+        );
     }
 
     /**
      * Author of post
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
