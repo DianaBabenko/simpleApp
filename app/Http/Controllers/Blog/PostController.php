@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Blog;
 use App\Models\BlogPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PostController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $items = BlogPost::all();
 

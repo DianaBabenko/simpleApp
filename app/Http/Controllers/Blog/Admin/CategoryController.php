@@ -38,9 +38,9 @@ class CategoryController extends BaseController
         $paginator = $this->blogCategoryRepository->getAllWithPaginate(25);
         //dd($this->blogCategoryRepository->getPosts());
 
-        $category = BlogCategory::find(1);
-        $tag = $category->tag;
-        dd($category, $tag);
+        //$category = BlogCategory::find(1);
+        //$tag = $category->tags;
+        //dd($category, $tag);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }

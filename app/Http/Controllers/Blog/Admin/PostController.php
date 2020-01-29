@@ -49,6 +49,9 @@ class PostController extends BaseController
         $paginator = $this->blogPostRepository->getAllWithPaginate();
         //dd($this->blogPostRepository->getMarkers()->first());
 
+        //$post = BlogPost::find(1);
+        //$tags = $post->tagsToMany;
+        //dd($tags);
         return view('blog.admin.posts.index', compact('paginator'));
     }
 

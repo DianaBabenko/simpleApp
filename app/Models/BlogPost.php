@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\BlogTag;
 
@@ -57,6 +59,22 @@ class BlogPost extends Model
     public function tag(): MorphOne
     {
         return $this->morphOne(BlogTag::class, 'taggable');
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function tags(): MorphMany
+    {
+        return $this->morphMany(BlogTag::class, 'taggable');
+    }
+
+    /**
+     * @return MorphToMany
+     */
+    public function tagsToMany(): MorphToMany
+    {
+        return $this->morphToMany(BlogTag::class, 'taggable', 'blog_taggables', 'taggable_id', 'id');
     }
 
     /**

@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')
+    ->name('home');
 
 Route::get('/send','MailController@send')->name('send');
 
@@ -26,7 +27,8 @@ Route::group(['prefix' => 'digging_deeper',], function() {
 });
 
 Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
-    Route::resource('posts', 'PostController')->names('blog.posts');
+    Route::resource('posts', 'PostController')
+        ->names('blog.posts');
 });
 
 
@@ -46,7 +48,9 @@ Route::group($groupData, function() {
     //BlogPost
     Route::resource('posts', 'PostController')
         ->except(['show'])
-        ->names('blog.admin.posts');
+        ->names('blog.admin.posts')
+        ->middleware('auth')
+        ->middleware('balance');
 });
 
 
