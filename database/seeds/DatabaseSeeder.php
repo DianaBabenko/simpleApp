@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
+use App\Models\{BlogPost, BlogPostComment, BlogPostMarker, BlogTag};
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,8 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(BlogCategoriesTableSeeder::class);
-        factory(\App\Models\BlogPost::class, 100)->create();
-        factory(\App\Models\BlogPostComment::class, 10)->create();
-        factory(\App\Models\BlogPostMarker::class, 5)->create();
+        factory(BlogPost::class, 100)->create();
+        factory(BlogPostComment::class, 10)->create();
+        factory(BlogPostMarker::class, 5)->create();
+        factory(BlogTag::class, 5)->create();
     }
 }

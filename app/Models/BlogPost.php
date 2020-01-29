@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\BlogTag;
 
 /**
  * Class BlogPost
@@ -46,6 +48,15 @@ class BlogPost extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class,'category_id','id');
+    }
+
+
+    /**
+     * @return MorphOne
+     */
+    public function tag(): MorphOne
+    {
+        return $this->morphOne(BlogTag::class, 'taggable');
     }
 
     /**

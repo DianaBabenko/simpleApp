@@ -36,7 +36,7 @@ class BlogCategoryRepository extends CoreRepository {
     /**
      * @return Collection
      */
-    public function getPosts():Collection
+    public function getPosts(): Collection
     {
         $posts =  $this->startConditions()
             ->with(['posts'])
@@ -55,12 +55,6 @@ class BlogCategoryRepository extends CoreRepository {
             'id',
             'CONCAT (id, title) AS id_title',
         ]);
-        /*$result[] = $this
-            ->startConditions()
-            ->select('blog_categories.*',
-                \DB::raw('CONCAT (id, title) AS id_title'))
-            ->toBase() //std class
-            ->get();*/
 
         $result = $this
             ->startConditions()

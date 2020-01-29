@@ -10,7 +10,7 @@ use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\View;
+use Illuminate\View\View;
 
 /**
  * Class PostController
@@ -47,7 +47,7 @@ class PostController extends BaseController
     public function index(): View
     {
         $paginator = $this->blogPostRepository->getAllWithPaginate();
-        dd($this->blogPostRepository->getMarkers()->first());
+        //dd($this->blogPostRepository->getMarkers()->first());
 
         return view('blog.admin.posts.index', compact('paginator'));
     }
@@ -55,11 +55,11 @@ class PostController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        $item = BlogPost::make();
+        $item = BlogPost::query()->make();
         $categoryList
             = $this->blogCategoryRepository->getForComboBox();
 
@@ -71,48 +71,36 @@ class PostController extends BaseController
      * Store a newly created resource in storage.
      *
      * @param  BlogPostCreateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(BlogPostCreateRequest $request)
+    public function store(BlogPostCreateRequest $request): RedirectResponse
     {
         $data = $request->input();
-        $item = BlogPost::create($data);
+        $item = BlogPost::query()->create($data);
 
-        if ($item) {
+        if ($item === true) {
             $job = new BlogPostAfterCreateJob($item);
             $this->dispatch($job);
 
             return redirect()->route('blog.admin.posts.edit', [$item->id])
                 ->with(['success' => 'Успешно сохранено']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return back()
+            ->withErrors(['msg' => 'Ошибка сохранения'])
+            ->withInput();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return View
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $item = $this->blogPostRepository->getEdit($id);
 
-        if (empty($item)) {
+        if ($item === null) {
             abort(404);
         }
 
@@ -127,13 +115,13 @@ class PostController extends BaseController
      *
      * @param  BlogPostUpdateRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(BlogPostUpdateRequest $request, $id)
+    public function update(BlogPostUpdateRequest $request, $id): RedirectResponse
     {
         $item = $this->blogPostRepository->getEdit($id);
 
-        if (empty($item)) {
+        if ($item === null) {
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                 ->withInput();
@@ -143,15 +131,14 @@ class PostController extends BaseController
 
         $result = $item->update($data);
 
-        if ($result) {
+        if ($result === true) {
             return redirect()
                 ->route('blog.admin.posts.edit', $item->id)
                 ->with(['success' => 'Успешно сохранено']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка обновления'])
-                ->withInput();
         }
+        return back()
+            ->withErrors(['msg' => 'Ошибка обновления'])
+            ->withInput();
     }
 
     /**
@@ -169,7 +156,6 @@ class PostController extends BaseController
         //$result = BlogPost::find($id)->forceDelete();
 
         if ($result === 1) {
-
             BlogPostAfterDeleteJob::dispatch($id)->delay(20);
 
             return redirect()

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
+use Illuminate\View\View;
 
 
 /**
@@ -30,22 +31,28 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $paginator = $this->blogCategoryRepository->getAllWithPaginate(25);
-        dd($this->blogCategoryRepository->getPosts());
+        //dd($this->blogCategoryRepository->getPosts());
+
+        $category = BlogCategory::find(1);
+        $tag = $category->tag;
+        dd($category, $tag);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $item = BlogCategory::make();
         $categoryList = $this->blogCategoryRepository->getForComboBox();
@@ -58,38 +65,39 @@ class CategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      * @param BlogCategoryCreateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function store(BlogCategoryCreateRequest $request)
+    public function store(BlogCategoryCreateRequest $request): RedirectResponse
     {
         $data = $request->input();
 
         //Create object and save in db
-        $item = BlogCategory::create($data);
+        $item = BlogCategory::query()->create($data);
 
-        if($item) {
+        if($item === true) {
             return redirect()
                 ->route('blog.admin.categories.edit', [$item->id])
                 ->with(['success' => 'Успешно сохранено']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
         }
+        return back()
+            ->withErrors(['msg' => 'Ошибка сохранения'])
+            ->withInput();
     }
 
 
     /**
-     * @param int $id
+     * @param $id
      * @param BlogCategoryRepository $categoryRepository
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id, BlogCategoryRepository $categoryRepository): View
     {
         $item = $this->blogCategoryRepository->getEdit($id);
-        if(empty($item)) {
+
+        if ($item === null) {
             abort(404);
         }
+
         $categoryList
             = $this->blogCategoryRepository->getForComboBox();//get elements for combobox list
 
@@ -101,13 +109,13 @@ class CategoryController extends BaseController
     /**
      * @param BlogCategoryUpdateRequest $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(BlogCategoryUpdateRequest $request, $id)
+    public function update(BlogCategoryUpdateRequest $request, $id): RedirectResponse
     {
         $item = $this->blogCategoryRepository->getEdit($id);
 
-        if (empty($item)) {
+        if ($item === null) {
             return back() //redirect back
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"]) //situated in errors array (back())
                 ->withInput(); //return info which was wrote
@@ -115,18 +123,15 @@ class CategoryController extends BaseController
 
         $data = $request->all();
 
-        $result = $item->update($data); //method update($data) includes fill and save methods
-            /*->fill($data) //fill fields
-            ->save();//return bool (save to db)*/
+        $result = $item->update($data);
 
-        if ($result) {
+        if ($result === true) {
             return redirect()
                 ->route('blog.admin.categories.edit', $item->id) //should id variable in route
                 ->with(['success' => 'Успешно сохранено']); //message
-        } else {
-            return back() // return to early route
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
         }
+        return back() // return to early route
+            ->withErrors(['msg' => 'Ошибка сохранения'])
+            ->withInput();
     }
 }

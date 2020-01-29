@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\BlogPost;
+use App\Models\BlogTag;
 
 /**
  * Class BlogCategory
@@ -52,9 +54,16 @@ class BlogCategory extends Model
     }
 
     /**
-     * exzample of accessor => getSmthAttribute
+     * @return MorphOne
+     */
+    public function tag(): MorphOne
+    {
+        return $this->morphOne(BlogTag::class, 'taggable');
+    }
+
+    /**
+     * exz of accessor => getSmthAttribute
      *
-     * @url https://laravel.com/docs/6/eloquent-mutators
      *
      * @return string
      */
