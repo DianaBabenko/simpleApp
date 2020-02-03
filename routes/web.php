@@ -33,15 +33,16 @@ Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
 
 
 //Admin page
-$groupData = [
+$adminGroup = [
     'namespace' => 'Blog\Admin',
-    'prefix' => 'admin/blog'
+    'prefix' => 'admin/blog',
+    'middleware' => ['auth'],
 ];
 
-Route::group($groupData, function() {
+Route::group($adminGroup, static function() {
     //BlogCategory
     $methods = ['index', 'edit', 'update', 'create', 'store'];
-    Route::resource('categories', 'CategoryController')
+    Route::resource('categories', 'CategoriesController')
         ->only($methods)
         ->names('blog.admin.categories');
 
@@ -49,7 +50,6 @@ Route::group($groupData, function() {
     Route::resource('posts', 'PostController')
         ->except(['show'])
         ->names('blog.admin.posts')
-        ->middleware('auth')
         ->middleware('balance');
 });
 
