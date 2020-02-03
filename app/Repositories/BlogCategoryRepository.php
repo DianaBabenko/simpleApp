@@ -2,84 +2,65 @@
 
 namespace App\Repositories;
 
-use App\Models\BlogCategory as Model;
+use App\Models\BlogCategory;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
 
 /**
  * Class BlogCategoryRepository
  *
  * @packege App\Repositories
  */
-class BlogCategoryRepository extends CoreRepository {
-
+class BlogCategoryRepository implements BlogCategoryRepositoryInterface
+{
     /**
-     * @return string
+     * @inheritDoc
+     * @return BlogCategory|null|object
      */
-    protected function getModelClass() {
-        return Model::class;
-    }
-
-    //get model for editing
-    /**
-     * @param int $id
-     *
-     * @return Model
-     */
-    public function getEdit($id)
+    public function find(int $id): ?BlogCategory
     {
-        return $this->startConditions()->find($id);
+        return BlogCategory::query()->find($id);
     }
 
-
     /**
-     * @return Collection
+     * @inheritDoc
      */
-    public function getPosts(): Collection
+    public function all(): Collection
     {
-        $posts =  $this->startConditions()
-            ->with(['posts'])
-            ->get();
-
-        return $posts;
+        return BlogCategory::all();
     }
 
     /**
-     * get list of category for combobox list
-     * @return Collection
+     * @inheritDoc
      */
-    public function getForComboBox()
+    public function create(array $category): BlogCategory
     {
-        $columns = implode(', ', [
-            'id',
-            'CONCAT (id, title) AS id_title',
-        ]);
-
-        $result = $this
-            ->startConditions()
-            ->selectRaw($columns)
-            ->toBase()
-            ->get();
-
-        return $result;
+        $blogCategory = new BlogCategory();
+        return $this->update($blogCategory, $category);
     }
 
     /**
-     * get category for view paginator
-     * @param int|null $perPage
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @inheritDoc
      */
-    public function getAllWithPaginate($perPage = null) {
-        $columns = ['id', 'title', 'parent_id'];
+    public function update(BlogCategory $blogCategory, array $category): BlogCategory
+    {
+        $blogCategory->title = $category['title'];
+        $blogCategory->description = $category['description'];
+        $blogCategory->slug = $category['slug'];
+        $blogCategory->parent_id = $category['parent_id'];
 
-        $result = $this
-            ->startConditions()
-            ->select($columns)
-            ->with([
-                'parentCategory:id,title',
-            ])
-            ->paginate($perPage);
-        return $result;
+        $blogCategory->save();
+
+        return $blogCategory;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        BlogCategory::query()
+            ->where('id','=', $id)
+            ->forceDelete()
+        ;
     }
 }
