@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-
 class CheckBalance
 {
     /**
@@ -22,9 +21,9 @@ class CheckBalance
         //dd(Auth::user());
         //dd($request->user()->balance);
         if ($request->user()->balance < 50) {
-            return redirect()
-                ->route('home');
+            return redirect()->route('home');
         }
+
         return $next($request);
     }
 }
