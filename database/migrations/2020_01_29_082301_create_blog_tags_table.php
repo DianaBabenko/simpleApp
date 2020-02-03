@@ -17,8 +17,8 @@ class CreateBlogTagsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
 
-            $table->bigInteger('taggable_id');
-            $table->string('taggable_type');
+            $table->bigInteger('taggable_id')->index();
+            $table->string('taggable_type')->index();
         });
     }
 

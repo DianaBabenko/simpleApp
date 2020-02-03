@@ -13,11 +13,11 @@ class CreateBlogTaggablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_taggables', function (Blueprint $table) {
+        Schema::create('blog_taggables', static function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('tag_id');
-            $table->bigInteger('taggable_id');
-            $table->string('taggable_type');
+            $table->bigInteger('tag_id')->index();
+            $table->bigInteger('taggable_id')->index();
+            $table->string('taggable_type')->index();
         });
     }
 

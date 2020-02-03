@@ -13,9 +13,9 @@ class PostMarker extends Migration
      */
     public function up()
     {
-        Schema::create('post_marker', function (Blueprint $table) {
-            $table->bigInteger('post_id');
-            $table->bigInteger('marker_id');
+        Schema::create('post_marker', static function (Blueprint $table) {
+            $table->bigInteger('post_id')->index();
+            $table->bigInteger('marker_id')->index();
         });
     }
 

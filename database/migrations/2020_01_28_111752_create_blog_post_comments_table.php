@@ -15,7 +15,7 @@ class CreateBlogPostCommentsTable extends Migration
     {
         Schema::create('blog_post_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->index();
 
             $table->text('title');
 
