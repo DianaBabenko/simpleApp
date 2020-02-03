@@ -6,16 +6,6 @@ use App\Models\BlogCategory;
 
 class BlogCategoryObserver
 {
-    /**
-     * Handle the blog category "created" event.
-     *
-     * @param  BlogCategory  $blogCategory
-     * @return void
-     */
-    public function created(BlogCategory $blogCategory)
-    {
-        //
-    }
 
     /**
      * @param BlogCategory $blogCategory
@@ -28,7 +18,7 @@ class BlogCategoryObserver
     /**
      * @param BlogCategory $blogCategory
      */
-    protected function setSlug(BlogCategory $blogCategory)
+    private function setSlug(BlogCategory $blogCategory)
     {
         if (empty($blogCategory->slug)) {
             $blogCategory->slug = \Str::slug($blogCategory->title);
