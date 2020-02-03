@@ -21,7 +21,7 @@ class Greeting extends Mailable
     private $messages;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $attachmentPath;
 
@@ -31,28 +31,32 @@ class Greeting extends Mailable
      * @param int $messages
      * @param string $attachmentPath
      */
-    public function __construct(string $name, int $messages, string $attachmentPath)
+    public function __construct(string $name, int $messages, string $attachmentPath = null)
     {
         $this->name = $name;
         $this->messages = $messages;
         $this->attachmentPath = $attachmentPath;
     }
 
-
     /**
      * @return Greeting
      */
     public function build(): Greeting
     {
-        return $this->view('emails.greeting')
+        $build = $this->view('emails.greeting')
             ->subject('Header')
-            ->attach($this->attachmentPath, [
-                'as' => basename($this->attachmentPath),
-                'mime' => 'plaintext',
-            ])
             ->with([
                 'name' => $this->name,
                 'messages' => $this->messages,
             ]);
+
+        if (null !== $this->attachmentPath) {
+            $build->attach($this->attachmentPath, [
+                'as' => basename($this->attachmentPath),
+                'mime' => 'plaintext',
+            ]);
+        }
+
+        return $build;
     }
 }
