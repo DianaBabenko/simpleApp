@@ -1,0 +1,198 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "App API",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/categories/": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Categories get",
+                "operationId": "category-all",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Categories",
+                "operationId": "category-show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Categories",
+                "operationId": "category-update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Category to update in the store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogCategory"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Categories",
+                "operationId": "category-delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "204": {
+                        "description": "no content"
+                    }
+                }
+            }
+        },
+        "/api/categories": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Categories",
+                "operationId": "category-create",
+                "requestBody": {
+                    "description": "Category to add to the store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogCategory"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BlogCategory": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "required": [
+                            "title",
+                            "slug",
+                            "parent_id",
+                            "description"
+                        ],
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "format": "string"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "format": "string"
+                            },
+                            "parent_id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "description": {
+                                "type": "string",
+                                "format": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

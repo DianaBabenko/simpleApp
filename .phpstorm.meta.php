@@ -5,13 +5,14 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-01-22 17:03:57.
+    * Generated on 2020-01-31 13:23:02.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
     */
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -75,6 +76,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -145,7 +147,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -166,6 +168,7 @@ namespace PHPSTORM_META {
     ]));
     override(\Illuminate\Container\Container::makeWith(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -229,6 +232,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -299,7 +303,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -320,6 +324,7 @@ namespace PHPSTORM_META {
     ]));
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -383,6 +388,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -453,7 +459,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -474,6 +480,7 @@ namespace PHPSTORM_META {
     ]));
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -537,6 +544,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -607,7 +615,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -628,6 +636,7 @@ namespace PHPSTORM_META {
     ]));
     override(\App::make(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -691,6 +700,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -761,7 +771,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -782,6 +792,7 @@ namespace PHPSTORM_META {
     ]));
     override(\App::makeWith(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -845,6 +856,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -915,7 +927,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -936,6 +948,7 @@ namespace PHPSTORM_META {
     ]));
     override(\app(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -999,6 +1012,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -1069,7 +1083,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -1090,6 +1104,7 @@ namespace PHPSTORM_META {
     ]));
     override(\resolve(0), map([
         '' => '@',
+        'App\Repositories\BlogCategoryRepositoryInterface' => \App\Repositories\BlogCategoryRepository::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -1153,6 +1168,7 @@ namespace PHPSTORM_META {
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.job.make' => \Illuminate\Foundation\Console\JobMakeCommand::class,
         'command.key.generate' => \Illuminate\Foundation\Console\KeyGenerateCommand::class,
+        'command.l5-swagger.generate' => \L5Swagger\Console\GenerateDocsCommand::class,
         'command.listener.make' => \Illuminate\Foundation\Console\ListenerMakeCommand::class,
         'command.mail.make' => \Illuminate\Foundation\Console\MailMakeCommand::class,
         'command.make:solution' => \Facade\Ignition\Commands\SolutionMakeCommand::class,
@@ -1223,7 +1239,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Illuminate\Queue\DatabaseQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
