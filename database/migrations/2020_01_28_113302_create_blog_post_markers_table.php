@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateBlogPostMarkersTable extends Migration
 {
@@ -11,14 +10,11 @@ class CreateBlogPostMarkersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('blog_post_markers', function (Blueprint $table) {
+        Schema::create('blog_post_markers', static function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,7 +23,7 @@ class CreateBlogPostMarkersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('blog_post_markers');
     }

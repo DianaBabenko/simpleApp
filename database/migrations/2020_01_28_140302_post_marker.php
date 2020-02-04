@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class PostMarker extends Migration
 {
@@ -11,7 +10,7 @@ class PostMarker extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('post_marker', static function (Blueprint $table) {
             $table->bigInteger('post_id')->index();
@@ -24,7 +23,7 @@ class PostMarker extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('post_marker');
     }
