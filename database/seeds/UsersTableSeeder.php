@@ -5,11 +5,9 @@ use Illuminate\Database\Seeder;
 class UsersTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $data = [
             [
@@ -18,19 +16,20 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt(str_random(16)),
                 'balance' => random_int(1,100),
             ],
+
             [
                 'name' => 'Автор',
                 'email' => 'author@gmail.com',
                 'password' => bcrypt(123123),
                 'balance' => random_int(1,100),
             ],
+
             [
                 'name' => 'Diana',
                 'email' => 'babenko@gmail.com',
                 'password' => bcrypt(1231234),
                 'balance' => random_int(1,100),
             ],
-
         ];
 
         DB::table('users')->insert($data);
