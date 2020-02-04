@@ -32,7 +32,7 @@ class BlogPostAfterDeleteJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         logs()->info("Удалена запись в блоге [{$this->blogPostId}]");
     }

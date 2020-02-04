@@ -7,35 +7,48 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\BlogPost;
-use App\Models\BlogTag;
 
 /**
  * Class BlogCategory
  *
  * @package App\Models
  *
+ */
+
+ /**
+ * @property int $id
+ * @property string title
+ * @property string slug
+ * @property string description
  * @property-read BlogCategory $parentCategory
  * @property-read string $parentTitle
+ *
+ * @OA\Schema(
+ *   schema="BlogCategory",
+ *   type="object",
+ *   allOf={
+ *       @OA\Schema(
+ *          required={"title", "slug", "description"},
+ *          @OA\Property(property="title", format="string", type="string"),
+ *          @OA\Property(property="slug", format="string", type="string"),
+ *          @OA\Property(property="description", format="string", type="string"),
+ *       )
+ *   }
+ * )
  */
 class BlogCategory extends Model
 {
-    use SoftDeletes;
+    public $timestamps = false;
 
-    /**
-     * Id of root
-     */
-    const ROOT = 1;
+    /** Id of root*/
+    public const DEFAULT_CATEGORY = 1;
 
-    protected $fillable
-        = [
-            'title',
-            'slug',
-            'parent_id',
-            'description'
-        ];
+    protected $fillable = [
+        'title',
+        'slug',
+        'description'
+    ];
 
     /**
      * @return HasMany
@@ -50,7 +63,7 @@ class BlogCategory extends Model
      *
      * @return BelongsTo
      */
-    public function parentCategory()
+    public function parentCategory(): BelongsTo/////
     {
         return $this->belongsTo(static::class, 'parent_id', 'id');
     }
@@ -69,30 +82,5 @@ class BlogCategory extends Model
     public function tags(): MorphMany
     {
         return $this->morphMany(BlogTag::class, 'taggable', 'blog_taggable', '');
-    }
-
-    /**
-     * exz of accessor => getSmthAttribute
-     *
-     *
-     * @return string
-     */
-    public function getParentTitleAttribute()
-    {
-        $title = $this->parentCategory->title
-            ?? ($this->isRoot()
-            ? 'Корень'
-            : '???');
-
-        return $title;
-    }
-
-    /**
-     * if the current object is root
-     * @return bool
-     */
-    public function isRoot()
-    {
-        return $this->id === BlogCategory::ROOT;
     }
 }

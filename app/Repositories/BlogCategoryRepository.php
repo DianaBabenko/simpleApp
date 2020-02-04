@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\BlogCategory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class BlogCategoryRepository
@@ -35,6 +36,7 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
     public function create(array $category): BlogCategory
     {
         $blogCategory = new BlogCategory();
+
         return $this->update($blogCategory, $category);
     }
 
@@ -46,7 +48,6 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
         $blogCategory->title = $category['title'];
         $blogCategory->description = $category['description'];
         $blogCategory->slug = $category['slug'];
-        $blogCategory->parent_id = $category['parent_id'];
 
         $blogCategory->save();
 
@@ -62,5 +63,15 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
             ->where('id','=', $id)
             ->forceDelete()
         ;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCategoriesWithPaginate(int $countOfCategories = null, array $columns = ['*']): LengthAwarePaginator
+    {
+        return BlogCategory::query()
+            ->select($columns, 'DESC')
+            ->paginate($countOfCategories);
     }
 }

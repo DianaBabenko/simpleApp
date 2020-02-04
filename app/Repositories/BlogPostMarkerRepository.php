@@ -2,28 +2,58 @@
 
 namespace App\Repositories;
 
-use App\Models\BlogPostMarker as Model;
+use App\Models\BlogPostMarker;
 use Illuminate\Database\Eloquent\Collection;
 
-class BlogPostMarkerRepository extends CoreRepository
+/**
+ * Class BlogPostMarkerRepository
+ * @package App\Repositories
+ */
+class BlogPostMarkerRepository implements BlogPostMarkerRepositoryInterface
 {
     /**
-     * @return string
+     * @inheritDoc
+     * @return BlogPostMarker|null|object
      */
-    protected function getModelClass() {
-        return Model::class;
+    public function find(int $id): ?BlogPostMarker
+    {
+        return BlogPostMarker::query()->find($id);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function all(): Collection
+    {
+        return BlogPostMarker::all();
+    }
 
     /**
-     * @return Collection
+     * @inheritDoc
      */
-    public function getPosts():Collection
+    public function create(array $marker): BlogPostMarker
     {
-        $posts =  $this->startConditions()
-            ->with(['posts'])
-            ->get();
+        $blogMarker = new BlogPostMarker();
 
-        return $posts;
+        return $this->update($blogMarker, $marker);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(BlogPostMarker $blogPostMarker, array $marker): BlogPostMarker
+    {
+        $blogPostMarker->title = $marker['title'];
+
+        $blogPostMarker->save();
+
+        return $blogPostMarker;
+    }
+
+    public function delete(int $id): void
+    {
+        BlogPostMarker::query()
+            ->where('id', '=', $id)
+            ->forceDelete();
     }
 }

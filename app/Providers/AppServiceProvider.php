@@ -6,7 +6,7 @@ use App\Models\BlogPost;
 use App\Models\BlogCategory;
 use App\Observers\BlogCategoryObserver;
 use App\Observers\BlogPostObserver;
-use Illuminate\Support\Facades\Schema;
+use Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,9 +16,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
     }
 
     /**
@@ -26,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Schema::defaultStringLength(191);
 

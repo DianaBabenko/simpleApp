@@ -2,72 +2,76 @@
 
 namespace App\Repositories;
 
-use App\Models\BlogPost as Model;
+use App\Models\BlogPost;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class BlogPostRepository
  *
  * @package App\Repositories
  */
-class BlogPostRepository extends CoreRepository
+class BlogPostRepository implements BlogPostRepositoryInterface
 {
     /**
-     * @return string
+     * @inheritDoc
+     * @return BlogPost|null|object
      */
-    protected function getModelClass()
+    public function find(int $id): ?BlogPost
     {
-        return Model::class;
+        return BlogPost::query()->find($id);
     }
 
     /**
-     * @return Collection
+     * @inheritDoc
      */
-    public function getMarkers():Collection
+    public function all(): Collection
     {
-        $markers =  $this->startConditions()
-            ->with(['markers'])
-            ->get();
-        return $markers;
+        return BlogPost::all();
     }
 
     /**
-     * @return LengthAwarePaginator
+     * @inheritDoc
      */
-    public function getAllWithPaginate()
+    public function create(array $post): BlogPost
     {
-        $columns = [
-            'id',
-            'title',
-            'slug',
-            'is_published',
-            'published_at',
-            'user_id',
-            'category_id'
-        ];
+       $blogPost = new BlogPost();
 
-        $result = $this->startConditions()
-            ->select($columns)
-            ->orderBy('id', 'DESC')
-            //->with(['category', 'user'])
-                ->with([
-                    'category' => function ($query) {
-                    $query->select(['id', 'title']);
-                    },
-                'user:id,name',
-            ])
-            ->paginate(25);
-
-        return $result;
+       return $this->update($blogPost, $post);
     }
 
     /**
-     * @param $id
-     * @return Model
+     * @inheritDoc
      */
-    public function getEdit($id)
+    public function update(BlogPost $blogPost, array $post): BlogPost
     {
-        return $this->startConditions()->find($id);
+        $blogPost->title = $post['title'];
+        $blogPost->slug = $post['slug'];
+        $blogPost->category_id = $post['category_id'];
+        $blogPost->excerpt = $post['excerpt'];
+
+        $blogPost->save();
+        return $blogPost;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        BlogPost::query()
+            ->where('id', '=', $id)
+            ->forceDelete()
+        ;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPostsWithPaginate(int $countOfPosts = null): LengthAwarePaginator
+    {
+        return BlogPost::query()
+            ->with(['category'])
+            ->paginate($countOfPosts);
     }
 }

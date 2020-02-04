@@ -5,19 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class BlogTag
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $title
+ * @property int $taggable_id
+ * @property int $taggable_type
+ */
 class BlogTag extends Model
 {
     public $timestamps = false;
 
-    protected $fillable
-        = [
-            'id',
-            'title',
-            'taggable_id',
-            'taggable_type',
-        ];
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'title',
+        'taggable_id',
+        'taggable_type',
+    ];
 
     /**
      * @return MorphTo

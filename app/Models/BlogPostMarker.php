@@ -4,17 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\BlogPost;
 
+/**
+ * Class BlogPostMarker
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $title
+ */
 class BlogPostMarker extends Model
 {
-    use SoftDeletes;
+    public $timestamps = false;
 
-    protected $fillable
-        = [
-            'title',
-        ];
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+    ];
 
     /**
      * @return BelongsToMany
