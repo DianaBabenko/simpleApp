@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-01-31 13:23:02.
+    * Generated on 2020-02-03 12:40:59.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -40,6 +40,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -196,6 +199,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -352,6 +358,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -508,6 +517,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -664,6 +676,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -820,6 +835,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -976,6 +994,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -1132,6 +1153,9 @@ namespace PHPSTORM_META {
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
         'NunoMaduro\Collision\Contracts\Adapters\Phpunit\Listener' => \NunoMaduro\Collision\Adapters\Phpunit\Listener::class,
         'NunoMaduro\Collision\Contracts\Provider' => \NunoMaduro\Collision\Provider::class,
+        'Pion\Laravel\ChunkUpload\Config\AbstractConfig' => \Pion\Laravel\ChunkUpload\Config\FileConfig::class,
+        'Pion\Laravel\ChunkUpload\Receiver\FileReceiver' => \Pion\Laravel\ChunkUpload\Receiver\FileReceiver::class,
+        'Pion\Laravel\ChunkUpload\Storage\ChunkStorage' => \Pion\Laravel\ChunkUpload\Storage\ChunkStorage::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,

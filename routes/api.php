@@ -17,10 +17,24 @@ Route::middleware('auth:api')->get('/user', static function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'categories'], static function() {
+Route::group(['prefix' => 'categories', 'middleware' => ['client', 'auth:api']], static function() {
     Route::get('/', 'Api\Blog\Admin\CategoriesController@index');
     Route::get('/{id}', 'Api\Blog\Admin\CategoriesController@show');
     Route::post('/', 'Api\Blog\Admin\CategoriesController@store');
     Route::put('/{id}', 'Api\Blog\Admin\CategoriesController@update');
     Route::delete('/{id}', 'Api\Blog\Admin\CategoriesController@delete');
+});
+
+Route::group(['prefix' => 'auth-test'], static function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+
+    Route::group([
+        'middleware' => 'auth:api'
+    ], static function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::get('user', 'AuthController@user');
+        Route::get('post', 'Blog\PostController@index');
+        Route::get('/categories', 'Api\Blog\Admin\CategoriesController@index');
+    });
 });

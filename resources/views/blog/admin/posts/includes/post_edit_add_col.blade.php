@@ -7,12 +7,12 @@
         </div>
     </div>
 </div><br>
-@if($item->exists)
+@if($post->exists)
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    ID: {{ $item->id }}
+                    ID: {{ $post->id }}
                 </div>
             </div>
         </div>
@@ -24,15 +24,15 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="title">Создано</label>
-                        <input type="text" value="{{ $item->created_at }}" class="form-control" disabled>
+                        <input type="text" value="{{ $post->created_at }}" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="title">Изменено</label>
-                        <input type="text" value="{{ $item->updated_at }}" class="form-control" disabled>
+                        <input type="text" value="{{ $post->updated_at }}" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="title">Опубликовано</label>
-                        <input type="text" value="{{ $item->published_at }}" class="form-control" disabled>
+                        <input type="text" value="{{ $post->published_at }}" class="form-control" disabled>
                     </div>
                 </div>
             </div>

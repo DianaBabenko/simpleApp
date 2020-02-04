@@ -17,21 +17,17 @@
                             <tr>
                                 <th>#</th>
                                 <th>Категория</th>
-                                <th>Родитель</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($paginator as $item)
-                                @php /** @var \App\Models\BlogCategory $item */ @endphp
+                            @foreach($paginator as $category)
+                                @php /** @var \App\Models\BlogCategory $category */ @endphp
                                 <tr>
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $category->id }}</td>
                                     <td>
-                                        <a href="{{ route('blog.admin.categories.edit', $item->id) }}">
-                                            {{ $item->title }}
+                                        <a href="{{ route('blog.admin.categories.edit', $category->id) }}">
+                                            {{ $category->title }}
                                         </a>
-                                    </td>
-                                    <td @if(in_array($item->parent_id, [0, 1])) style="color: grey" @endif>
-                                        {{$item->parentTitle}}
                                     </td>
                                 </tr>
                                 @endforeach

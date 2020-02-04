@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    @php /** @var \App\Models\BlogPost $item */ @endphp
+    @php /** @var \App\Models\BlogPost $post */ @endphp
     <div class="container">
 
         @include('blog.admin.posts.includes.result_messages')
 
-        @if($item->exists)
-        <form method="POST" action="{{ route('blog.admin.posts.update', $item->id) }}">
+        @if($post->exists)
+        <form method="POST" action="{{ route('blog.admin.posts.update', $post->id) }}">
             @method('PATCH')
 
             @else
@@ -26,9 +26,9 @@
                 </form>
         </form>
 
-        @if($item->exists)
+        @if($post->exists)
         <br>
-            <form method="POST" action="{{ route('blog.admin.posts.destroy', $item->id) }}">
+            <form method="POST" action="{{ route('blog.admin.posts.destroy', $post->id) }}">
                 @method('DELETE')
                 @csrf
                 <div class="row justify-content-center">

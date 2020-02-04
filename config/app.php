@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         L5Swagger\L5SwaggerServiceProvider::class,
+        \Pion\Laravel\ChunkUpload\Providers\ChunkUploadServiceProvider::class,
     ],
 
     /*

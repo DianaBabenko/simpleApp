@@ -1,5 +1,5 @@
 @php
-    /** @var \App\Models\BlogCategory $item */
+    /** @var \App\Models\BlogCategory $category */
     /** @var \Illuminate\Support\Collection $categoryList */
 @endphp
 
@@ -18,7 +18,7 @@
                     <div class="tab-pane active" id="maindata" role="tabpanel">
                         <div class="form-group">
                             <label for="title">Заголовок</label>
-                            <input name="title" value="{{ $item->title }}"
+                            <input name="title" value="{{ $category->title }}"
                                    id="title"
                                    type="text"
                                    class="form-control"
@@ -28,27 +28,10 @@
 
                         <div class="form-group">
                             <label for="slug">Идентификатор</label>
-                            <input name="slug" value=" {{$item->slug}}"
+                            <input name="slug" value=" {{$category->slug}}"
                                    id="slug"
                                    type="text"
                                    class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="parent_id">Родитель</label>
-                            <select name="parent_id"
-                                    id="parent_id"
-                                    class="form-control"
-                                    placeholder="Выберите категорию"
-                                    required>
-                                @foreach($categoryList as $categoryOption)
-                                    <option value="{{ $categoryOption->id }}"
-                                    @if($categoryOption->id == $item->parent_id) selected @endif>
-                                    {{--{{ $categoryOption->id }}. {{ $categoryOption->title }}--}}
-                                        {{ $categoryOption->id_title }}
-                                    </option>
-                                    @endforeach
-                            </select>
                         </div>
 
                         <div class="form-group">
@@ -57,7 +40,7 @@
                                       id="description"
                                       class="form-control"
                                       rows="3">
-                                {{ old('description', $item->description) }}
+                                {{ old('description', $category->description) }}
                             </textarea>
                         </div>
                     </div>

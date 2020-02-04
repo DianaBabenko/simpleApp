@@ -15,23 +15,21 @@
                                 <th>#</th>
                                 <th>Автор</th>
                                 <th>Категория</th>
-                                <th>Заголовок</th>
                                 <th>Дата публикации</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($paginator as $post)
+                            @foreach($paginatorPosts as $post)
                                 @php /** @var \App\Models\BlogPost $post */ @endphp
-                                <tr @if(!$post->is_published) style="background-color: #ccc;" @endif>
+                                <tr @if($post->is_published === false) style="background-color: lightsteelblue;" @endif>
                                     <td>{{ $post->id }}</td>
-                                    <td>{{ $post->user->name }}</td>
-                                    <td>{{ $post->category->title }}</td>
                                     <td>
                                         <a href="{{ route('blog.admin.posts.edit', $post->id) }}">
                                             {{ $post->title }}
                                         </a>
                                     </td>
-                                    <td> {{ $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('d.M H:i') : '' }}</td>
+                                    <td>{{ $post->category->title }}</td>
+                                    <td> {{ optional($post->published_at)->format('d.M H:i') }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -41,13 +39,13 @@
                 </div>
             </div>
         </div>
-        @if($paginator->total() > $paginator->count())
+        @if($paginatorPosts->total() > $paginatorPosts->count())
             <br>
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            {{ $paginator->links() }}
+                            {{ $paginatorPosts->links() }}
                         </div>
                     </div>
                 </div>

@@ -11,28 +11,28 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
 });
 
+Route::get('file-upload', 'FileUploadController@fileUpload')->name('file.upload');
+Route::post('file-upload', 'UploadController@upload')->name('file.upload.post');
+
+Route::get('upload-advanced', 'UploadController@upload');
+Route::post('upload-advanced', 'UploadController@upload');
+
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')
     ->name('home');
 
 Route::get('/send','MailController@send')->name('send');
 
-Route::group(['prefix' => 'digging_deeper',], function() {
-    Route::get('collections', 'DiggingDeeperController@collections')
-        ->name('digging_deeper.collections');
-});
-
-Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
+Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], static function () {
     Route::resource('posts', 'PostController')
         ->names('blog.posts');
 });
 
-
-//Admin page
 $adminGroup = [
     'namespace' => 'Blog\Admin',
     'prefix' => 'admin/blog',
@@ -40,23 +40,15 @@ $adminGroup = [
 ];
 
 Route::group($adminGroup, static function() {
-    //BlogCategory
     $methods = ['index', 'edit', 'update', 'create', 'store'];
-    Route::resource('categories', 'CategoriesController')
+    Route::resource('categories', 'CategoryController')
         ->only($methods)
         ->names('blog.admin.categories');
 
-    //BlogPost
     Route::resource('posts', 'PostController')
         ->except(['show'])
         ->names('blog.admin.posts')
         ->middleware('balance');
 });
 
-
-//Route::resource('rest', 'RestTestController')->names('restTest');
-
-
-
-
-
+Route::view('test-passport','passport');
