@@ -18,8 +18,6 @@ class CheckBalance
      */
     public function handle(Request $request, Closure $next)
     {
-        //dd(Auth::user());
-        //dd($request->user()->balance);
         if ($request->user()->balance < 50) {
             return redirect()->route('home');
         }
