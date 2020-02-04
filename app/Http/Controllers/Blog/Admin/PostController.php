@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogPostCreateRequest;
 use App\Jobs\BlogPostAfterCreateJob;
 use App\Jobs\BlogPostAfterDeleteJob;
@@ -11,12 +12,13 @@ use App\Repositories\BlogPostRepository;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class PostController
  * @package App\Http\Controllers\Blog\Admin
  */
-class PostController extends BaseController
+class PostController extends Controller
 {
     /**
      * @var BlogPostRepository
@@ -30,13 +32,13 @@ class PostController extends BaseController
 
     /**
      * PostController constructor.
+     * @param BlogPostRepository $blogPostRepository
+     * @param BlogCategoryRepository $blogCategoryRepository
      */
-    public function __construct()
+    public function __construct(BlogPostRepository $blogPostRepository, BlogCategoryRepository $blogCategoryRepository)
     {
-        parent::__construct();
-
-        $this->blogPostRepository = app(BlogPostRepository::class);//create object
-        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+        $this->blogPostRepository = $blogPostRepository;
+        $this->blogCategoryRepository = $blogCategoryRepository;
     }
 
     /**
@@ -46,13 +48,11 @@ class PostController extends BaseController
      */
     public function index(): View
     {
-        $paginator = $this->blogPostRepository->getAllWithPaginate();
-        //dd($this->blogPostRepository->getMarkers()->first());
+        $paginatorPosts = $this->blogPostRepository->getPostsWithPaginate(7);
 
-        //$post = BlogPost::find(1);
-        //$tags = $post->tagsToMany;
-        //dd($tags);
-        return view('blog.admin.posts.index', compact('paginator'));
+        return view('blog.admin.posts.index', [
+            'paginatorPosts' => $paginatorPosts,
+        ]);
     }
 
     /**
@@ -62,30 +62,31 @@ class PostController extends BaseController
      */
     public function create(): View
     {
-        $item = BlogPost::query()->make();
-        $categoryList
-            = $this->blogCategoryRepository->getForComboBox();
+        $post = BlogPost::query()->make();
+        $categoryList = $this->blogCategoryRepository->getCategoriesWithPaginate();
 
-        return view('blog.admin.posts.edit',
-        compact('item','categoryList'));
+        return view('blog.admin.posts.edit', [
+            'post' => $post,
+            'categoryList' => $categoryList,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  BlogPostCreateRequest  $request
+     * @param  BlogPostCreateRequest $request
      * @return RedirectResponse
      */
     public function store(BlogPostCreateRequest $request): RedirectResponse
     {
-        $data = $request->input();
-        $item = BlogPost::query()->create($data);
+        $newPost = $request->input();
 
-        if ($item === true) {
-            $job = new BlogPostAfterCreateJob($item);
+        /** @var BlogPost $post */
+        $post = BlogPost::query()->make($newPost);
+
+        if ($post === true) {
+            $job = new BlogPostAfterCreateJob($post);
             $this->dispatch($job);
 
-            return redirect()->route('blog.admin.posts.edit', [$item->id])
+            return redirect()->route('blog.admin.posts.edit', [$post->id])
                 ->with(['success' => 'Успешно сохранено']);
         }
         return back()
@@ -101,16 +102,18 @@ class PostController extends BaseController
      */
     public function edit($id): View
     {
-        $item = $this->blogPostRepository->getEdit($id);
+        $post = $this->blogPostRepository->find($id);
 
-        if ($item === null) {
-            abort(404);
+        if ($post === null) {
+            throw new NotFoundHttpException();
         }
 
-        $categoryList
-            = $this->blogCategoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getCategoriesWithPaginate();
 
-        return view('blog.admin.posts.edit', compact('item','categoryList'));
+        return view('blog.admin.posts.edit', [
+                'post' => $post,
+                'categoryList' => $categoryList
+            ]);
     }
 
     /**
@@ -122,21 +125,21 @@ class PostController extends BaseController
      */
     public function update(BlogPostUpdateRequest $request, $id): RedirectResponse
     {
-        $item = $this->blogPostRepository->getEdit($id);
+        $post = $this->blogPostRepository->find($id);
 
-        if ($item === null) {
+        if ($post === null) {
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                 ->withInput();
         }
 
-        $data = $request->all();
+        $updatePost = $request->all();
 
-        $result = $item->update($data);
+        $result = $post->update($updatePost);
 
         if ($result === true) {
             return redirect()
-                ->route('blog.admin.posts.edit', $item->id)
+                ->route('blog.admin.posts.edit', [$post->id])
                 ->with(['success' => 'Успешно сохранено']);
         }
         return back()
@@ -152,13 +155,9 @@ class PostController extends BaseController
      */
     public function destroy(int $id): RedirectResponse
     {
-        //soft delete, stay at db
-        $result = BlogPost::destroy($id);
+        $result = $this->blogPostRepository->delete($id);
 
-        //full delete from db
-        //$result = BlogPost::find($id)->forceDelete();
-
-        if ($result === 1) {
+        if ($result === 1) {///void
             BlogPostAfterDeleteJob::dispatch($id)->delay(20);
 
             return redirect()

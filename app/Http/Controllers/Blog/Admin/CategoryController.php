@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\View\View;
-
+use Throwable;
 
 /**
- * Class CategoryController
+ * Class CategoriesController
  * @package App\Http\Controllers\Blog\Admin
  */
-class CategoryController extends BaseController
+class CategoryController extends Controller
 {
     /**
      * @var BlogCategoryRepository
      */
     private $blogCategoryRepository;
 
+    /**
+     * CategoriesController constructor.
+     */
     public function __construct()
     {
-        parent::__construct();
-
         $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
 
@@ -35,17 +37,12 @@ class CategoryController extends BaseController
      */
     public function index(): View
     {
-        $paginator = $this->blogCategoryRepository->getAllWithPaginate(25);
-        //dd($this->blogCategoryRepository->getPosts());
+        $paginator = $this->blogCategoryRepository->getCategoriesWithPaginate(5);
 
-        //$category = BlogCategory::find(1);
-        //$tag = $category->tags;
-        //dd($category, $tag);
-
-        return view('blog.admin.categories.index', compact('paginator'));
+        return view('blog.admin.categories.index', [
+            'paginator' => $paginator,
+        ]);
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -54,57 +51,53 @@ class CategoryController extends BaseController
      */
     public function create(): View
     {
-        $item = BlogCategory::make();
-        $categoryList = $this->blogCategoryRepository->getForComboBox();
+        $category = BlogCategory::query()->make();
 
-        return view('blog.admin.categories.edit',
-            compact('item', 'categoryList'));
+        return view('blog.admin.categories.edit', [
+            'category' => $category,
+        ]);
     }
 
-
     /**
-     * Store a newly created resource in storage.
      * @param BlogCategoryCreateRequest $request
      * @return RedirectResponse
      */
     public function store(BlogCategoryCreateRequest $request): RedirectResponse
     {
-        $data = $request->input();
+        $newCategory = $request->all();
 
-        //Create object and save in db
-        $item = BlogCategory::query()->create($data);
+        try {
+            /** @var BlogCategory $category */
+            $category = BlogCategory::query()->create($newCategory);
 
-        if($item === true) {
             return redirect()
-                ->route('blog.admin.categories.edit', [$item->id])
-                ->with(['success' => 'Успешно сохранено']);
+                ->route('blog.admin.categories.edit', $category->id)
+                ->with(['success' => 'Успешно сохранено'])
+            ;
+        } catch (Throwable $error) {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput()
+            ;
         }
-        return back()
-            ->withErrors(['msg' => 'Ошибка сохранения'])
-            ->withInput();
     }
-
 
     /**
      * @param $id
-     * @param BlogCategoryRepository $categoryRepository
      * @return View
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository): View
+    public function edit($id): View
     {
-        $item = $this->blogCategoryRepository->getEdit($id);
+        $category = $this->blogCategoryRepository->find($id);
 
-        if ($item === null) {
+        if ($category === null) {
             abort(404);
         }
 
-        $categoryList
-            = $this->blogCategoryRepository->getForComboBox();//get elements for combobox list
-
-        return view('blog.admin.categories.edit',
-        compact('item', 'categoryList'));
+        return view('blog.admin.categories.edit', [
+            'category' => $category,
+        ]);
     }
-
 
     /**
      * @param BlogCategoryUpdateRequest $request
@@ -113,24 +106,23 @@ class CategoryController extends BaseController
      */
     public function update(BlogCategoryUpdateRequest $request, $id): RedirectResponse
     {
-        $item = $this->blogCategoryRepository->getEdit($id);
+        $category = $this->blogCategoryRepository->find($id);
 
-        if ($item === null) {
-            return back() //redirect back
-                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"]) //situated in errors array (back())
-                ->withInput(); //return info which was wrote
+        if ($category === null) {
+            return back()
+                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
+                ->withInput();
         }
 
-        $data = $request->all();
-
-        $result = $item->update($data);
+        $updateCategory = $request->all();
+        $result = $category->update($updateCategory);
 
         if ($result === true) {
             return redirect()
-                ->route('blog.admin.categories.edit', $item->id) //should id variable in route
-                ->with(['success' => 'Успешно сохранено']); //message
+                ->route('blog.admin.categories.edit', [$category->id])
+                ->with(['success' => 'Успешно сохранено']);
         }
-        return back() // return to early route
+        return back()
             ->withErrors(['msg' => 'Ошибка сохранения'])
             ->withInput();
     }

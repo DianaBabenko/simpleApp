@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\Greeting;
 use Illuminate\Http\Response;
-use Storage;
 use Mail;
 
 class MailController extends Controller
@@ -12,7 +11,7 @@ class MailController extends Controller
     /**
      * @return Response
      */
-    public function send():Response
+    public function send(): Response
     {
         $userName = 'Den';
         $newMessages = 11;
