@@ -1,18 +1,15 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
-use App\Models\BlogPostMarker;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
+use App\Models\BlogPostMarker;
 
-$factory->define(BlogPostMarker::class, function (Faker $faker) {
-    $title = $faker->sentence(rand(1, 2), true);
-    $createdAt = $faker->dateTimeBetween('-2 months', '-1 months');
+/** @var Factory $factory */
 
-    $data = [
+$factory->define(BlogPostMarker::class, static function (Faker $faker) {
+    $title = $faker->sentence(random_int(1, 2), true);
+
+    return [
         'title' => $title,
-        'created_at' => $createdAt,
     ];
-
-    return $data;
 });
